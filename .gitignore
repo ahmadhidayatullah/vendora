@@ -1,0 +1,28 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# Node
+node_modules/
+npm-debug.log
+
+# Laravel
+/backend/vendor/
+/backend/node_modules/
+/backend/public/storage
+/backend/storage/*.key
+/backend/.env
+
+# Logs
+*.log
+
+# Docker
+docker/mysql/data
+
+# IDE
+.vscode/
+.idea/
+
+# Misc
+.env
+.env.*
