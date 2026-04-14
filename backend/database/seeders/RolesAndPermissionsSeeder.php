@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Enums\User\UserRole;
 use Illuminate\Database\Seeder;
 use Spatie\Permission\Models\Role;
 use Spatie\Permission\Models\Permission;
@@ -13,41 +14,45 @@ class RolesAndPermissionsSeeder extends Seeder
         // reset cache
         app()[\Spatie\Permission\PermissionRegistrar::class]->forgetCachedPermissions();
 
-        $permissions = [
-            'manage users',
-            'manage products',
-            'create order'
-        ];
-
-        foreach ($permissions as $perm) {
-            Permission::firstOrCreate(['name' => $perm]);
+        foreach (UserRole::values() as $role) {
+            Role::firstOrCreate(['name' => $role]);
         }
+        
+        // $permissions = [
+        //     'manage users',
+        //     'manage products',
+        //     'create order'
+        // ];
 
-        $roles = [
-            'superadmin',
-            'vendor',
-            'customer'
-        ];
+        // foreach ($permissions as $perm) {
+        //     Permission::firstOrCreate(['name' => $perm]);
+        // }
 
-        foreach ($roles as $roleName) {
-            $role = Role::firstOrCreate(['name' => $roleName]);
+        // $roles = [
+        //     'superadmin',
+        //     'vendor',
+        //     'customer'
+        // ];
 
-            switch ($roleName) {
-                case 'superadmin':
-                    $role->givePermissionTo(Permission::all());
-                    break;
-                case 'vendor':
-                    $role->givePermissionTo([
-                        'manage products',
-                        'create order',
-                    ]);
-                    break;
-                case 'customer':
-                    $role->givePermissionTo([
-                        'create order',
-                    ]);
-                    break;
-            }
-        }
+        // foreach ($roles as $roleName) {
+        //     $role = Role::firstOrCreate(['name' => $roleName]);
+
+        //     switch ($roleName) {
+        //         case 'superadmin':
+        //             $role->givePermissionTo(Permission::all());
+        //             break;
+        //         case 'vendor':
+        //             $role->givePermissionTo([
+        //                 'manage products',
+        //                 'create order',
+        //             ]);
+        //             break;
+        //         case 'customer':
+        //             $role->givePermissionTo([
+        //                 'create order',
+        //             ]);
+        //             break;
+        //     }
+        // }
     }
 }
