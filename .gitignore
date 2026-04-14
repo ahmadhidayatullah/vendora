@@ -25,4 +25,3 @@ docker/mysql/data
 
 # Misc
 .env
-.env.*
