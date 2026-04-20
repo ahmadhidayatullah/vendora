@@ -5,6 +5,7 @@ namespace App\Services;
 use App\DTOs\OrderData;
 use App\Enums\Order\OrderStatus;
 use App\Enums\Order\PaymentStatus;
+use App\Events\OrderCreated;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Repositories\Contracts\OrderRepositoryInterface;
@@ -84,7 +85,11 @@ class OrderService
             $this->productRepository->decrementStock($product, $item['quantity']);
         }
 
-        return $order->load('items.product');
+        $order->load('items.product');
+
+        OrderCreated::dispatch($order);
+
+        return $order;
     }
 
     public function updateStatus(Order $order, OrderStatus $status): Order
